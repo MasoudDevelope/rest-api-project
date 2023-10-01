@@ -7,6 +7,7 @@ from resources.user import blp as UserBlueprint
 from blocklist import BLOCKLIST
 from db import db
 import models
+#comment
 import os
 from flask_jwt_extended import JWTManager
 import secrets
