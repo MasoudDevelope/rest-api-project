@@ -1,5 +1,5 @@
 flask
-flask-smorest
+flask-smorest >=0.39.0
 python-dotenv
 marshmallow
 sqlalchemy
