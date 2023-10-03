@@ -7,6 +7,7 @@ from resources.user import blp as UserBlueprint
 from blocklist import BLOCKLIST
 from db import db
 import models
+from dotenv import load_dotenv
 #comment
 import os
 from flask_jwt_extended import JWTManager
@@ -19,6 +20,7 @@ from flask_migrate import Migrate
 
 
 def create_app(db_url=None):
+    load_dotenv()
     app = Flask(__name__)
     app.config["PROPAGATE_EXCEPTIONS"] = True
     app.config["API_TITLE"] = "Stores REST API"
