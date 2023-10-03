@@ -8,5 +8,5 @@ COPY . .
 #when wanted to use gunicorn
 #CMD ["gunicorn" , "--bind", "0.0.0.0:80", "app:create_app()"]
 #when we wanted to make the docker to first migrate the db, then deploy
-CMD [ "/bin/bash", "docker-entrypoint.ssh"]
+CMD [ "/bin/bash", "docker-entrypoint.sh"]
 
