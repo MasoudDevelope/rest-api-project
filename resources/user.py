@@ -17,14 +17,13 @@ blp=Blueprint("User","user",description="operations on user")
 domain =os.getenv("MAILGUN_DOMAIN")
 api_key=os.getenv("MAILGUN_API_KEY")
 def send_simple_message(to,subject,body):
-    request = requests.post(
+    return  (requests.post(
 		f"https://api.mailgun.net/v3/{domain}/messages",
 		auth=("api", api_key),
 		data={"from": f"HR <mailgun@{domain}>",
 			"to": [to],
 			"subject": subject,
-			"text": body})
-    return request
+			"text": body}))
 
 
 
@@ -43,9 +42,9 @@ class UserRegister(MethodView):
         db.session.commit()
         send_simple_message(to=user.email,
                             subject="Successfully Signed Up!",
-                            body = f"Hi {user.username}. Welcome to our World!"
+                            body = f"Hi masoud. Welcome to our World!"
                             )
-        return user
+        return "registered!"
 @blp.route("/user/<int:user_id>")
 class UserList(MethodView):
     @blp.response(200,UserSchema)
