@@ -1,3 +1,4 @@
+import requests
 from db import db
 from flask.views import MethodView
 from flask_smorest import Blueprint,abort
@@ -7,7 +8,6 @@ from schemas import UserSchema
 from schemas import UserRegisterSchema
 from flask_jwt_extended import create_access_token,jwt_required,get_jwt,create_refresh_token,get_jwt_identity
 from blocklist import BLOCKLIST
-import requests
 import os
 from sqlalchemy import or_
 
