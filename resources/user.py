@@ -1,4 +1,6 @@
-import requests
+import requests 
+import os
+
 from db import db
 from flask.views import MethodView
 from flask_smorest import Blueprint,abort
@@ -8,23 +10,21 @@ from schemas import UserSchema
 from schemas import UserRegisterSchema
 from flask_jwt_extended import create_access_token,jwt_required,get_jwt,create_refresh_token,get_jwt_identity
 from blocklist import BLOCKLIST
-import os
 from sqlalchemy import or_
 
 
 blp=Blueprint("User","user",description="operations on user")
-
 domain =os.getenv("MAILGUN_DOMAIN")
 api_key=os.getenv("MAILGUN_API_KEY")
 def send_simple_message(to,subject,body):
-	return requests.post(
+    request = requests.post(
 		f"https://api.mailgun.net/v3/{domain}/messages",
 		auth=("api", api_key),
 		data={"from": f"HR <mailgun@{domain}>",
 			"to": [to],
 			"subject": subject,
 			"text": body})
-
+    return request
 
 
 

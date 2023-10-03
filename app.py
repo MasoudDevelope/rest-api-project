@@ -1,4 +1,4 @@
-import requests
+import os
 from flask import Flask,jsonify
 from flask_smorest import Api
 from resources.item import blp as ItemBlueprint
@@ -9,8 +9,6 @@ from blocklist import BLOCKLIST
 from db import db
 import models
 from dotenv import load_dotenv
-#comment
-import os
 from flask_jwt_extended import JWTManager
 import secrets
 from flask_migrate import Migrate
