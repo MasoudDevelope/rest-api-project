@@ -14,8 +14,11 @@ from sqlalchemy import or_
 
 
 blp=Blueprint("User","user",description="operations on user")
+
 domain =os.getenv("MAILGUN_DOMAIN")
 api_key=os.getenv("MAILGUN_API_KEY")
+
+print(domain,api_key)
 def send_simple_message(to,subject,body):
     return  (requests.post(
 		f"https://api.mailgun.net/v3/{domain}/messages",
