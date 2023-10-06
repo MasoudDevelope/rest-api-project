@@ -1,5 +1,8 @@
 import requests 
 import os
+import jinja2
+
+from flask import current_app
 from db import db
 from flask.views import MethodView
 from flask_smorest import Blueprint,abort
@@ -10,14 +13,15 @@ from schemas import UserRegisterSchema
 from flask_jwt_extended import create_access_token,jwt_required,get_jwt,create_refresh_token,get_jwt_identity
 from blocklist import BLOCKLIST
 from sqlalchemy import or_
+from tasks import func_send_simple_message
+
 
 
 blp=Blueprint("User","user",description="operations on user")
 
-domain =os.getenv("MAILGUN_DOMAIN")
+"""domain =os.getenv("MAILGUN_DOMAIN")
 api_key=os.getenv("MAILGUN_API_KEY")
 
-print(domain,api_key)
 def send_simple_message(to,subject,body):
     return  (requests.post(
 		f"https://api.mailgun.net/v3/{domain}/messages",
@@ -26,7 +30,7 @@ def send_simple_message(to,subject,body):
 			"to": [to],
 			"subject": subject,
 			"text": body}))
-
+"""
 
 
 @blp.route("/register")
@@ -42,10 +46,8 @@ class UserRegister(MethodView):
                          password=pbkdf2_sha256.hash(user_data["password"]))
         db.session.add(user)
         db.session.commit()
-        send_simple_message(to=user.email,
-                            subject="Successfully Signed Up!",
-                            body = f"Hi masoud. Welcome to our World!"
-                            )
+        current_app.queue.enqueue(func_send_simple_message,user.email,user.username)
+
         return "registered!"
 @blp.route("/user/<int:user_id>")
 class UserList(MethodView):
